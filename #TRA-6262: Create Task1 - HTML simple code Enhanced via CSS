@@ -1,1 +1,58 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+  
+  <meta charset="UTF-8">
+  <title>Simple Form</title>
+</head>
+  <style>
+    head{
+      margin: 0;
+      font-size: large;
+      font-family: 'Times New Roman', Times, serif;
+      background-color: beige;
+      color: bisque;
+    }
+  </style>
+<body>
+
+  <h1>Simple Form</h1>
+  <form>
+    <label>Name:</label><br>
+    <input type="text" name="name" placeholder="Enter name here" required><br><br>
+
+    <label>Phone number:</label><br>
+    <input type="tel" name="phone" placeholder="Ex:- 9999" required><br><br>
+
+    Gender:<br>
+    <input type="radio" name="gender" value="male" required> Male<br>
+    <input type="radio" name="gender" value="female"> Female<br>
+    <input type="radio" name="gender" value="other"> Other<br><br>
+
+    <input type="checkbox" name="age" required> I confirm I am above 18<br><br>
+ <input type="checkbox" name="age" required>I am under 18<br><br>
+    <button type="submit"style= "background-color: green; color: white;">Submit</button>
+    <button type="cancel"style="background-color: red; color: white;">Cancel</button>
+  </form>
+  <label> Choose country from dropdown:</label><br> 
+  <select name="country" required> 
+    <option value="">Select</option>
+        <option value="Oman">Oman</option>
+    <option value="UAE">UAE</option>
+
+    <option value="KSA">KSA</option>
+
+        <option value="Egypt">Egypt</option>
+  </select><br><br>
+  <style> 
+    body{
+      margin: 1;
+      font-size: large;
+      font-family: Arial, Helvetica, sans-serif;
+      background-color: blanchedalmond;
+      color: burlywood;
+    }
+    </style>
+</body>
+</html>
