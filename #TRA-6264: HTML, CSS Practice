@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<head> 
+    <header>Build diffrent</header>
+    <title> My World!</title>
+    <h1> </h1><P> Welcome to AL - Muiayed Practice </P></h1>
+    <style>
+    head{
+        font: optional;
+        font-size: medium;
+        font-weight: 200;
+        font-optical-sizing: inherit;
+        color: blanchedalmond;
+        background-color: azure;
+    }
+    </style>
+</head>
+<body>
+    <form>
+        <h2> ceate form </h2>
+        <label>Name:</label> 
+         <input type="text" name="name" placeholder="Enter name here" required><br><br>
+         <br> 
+         <label> Age </label>
+         <input type="number" name="Age" placeholder="18 +" required> <br><br>
+         <label> number</label>
+         <input type="number" name="number" placeholder="123...etc" required> <br> <br>
+         <input type="datetime-local" name="Date" placeholder="Date" required> <br> <br> 
+             Gender:<br>
+    <input type="radio" name="gender" value="male" required> Male<br>
+    <input type="radio" name="gender" value="female"> Female<br>
+    <input type="radio" name="gender" value="other"> Other<br><br>
+
+    <input type="checkbox" name="age" required>I am above 18<br><br>
+ <input type="checkbox" name="age" required>I am under 18<br><br>
+    <button type="submit"style= "background-color: green; color: white;">Submit</button>
+    <button type="cancel"style="background-color: red; color: white;">Cancel</button>
+<nav>
+    <a href="https://en.wikipedia.org/wiki/Chocolate_bar"> Types of Chocolate bar</a></nav>
+        </form>
+<p> A chocolate bar is a confection containing chocolate, which may also contain layerings or mixtures that include nuts, fruit, caramel, nougat, and wafers. A flat and easily partitionable chocolate bar is also called a tablet. In some varieties of English and food labeling standards, the term chocolate bar is reserved for bars of solid chocolate, with candy bar used for products with additional ingredients.</p>
+        <br>
+    <P> Am not starting yet. And not delyaing. Starting rocking!</P>
+    <Style>
+        body{
+            color: chocolate;
+            font-size: large;
+            font-family: 'Times New Roman', Times, serif;
+            font-style: italic;
+            font-display: swap;
+            font-optical-sizing: initial;
+            column-rule: 0cap;
+background-color: blanchedalmond
+        }
+    </Style>
+    <h4> delightful, Yummy, everything for sell, 1 Chocolate bar with 2$</h4>
+</body>
+</html>
