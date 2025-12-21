@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>To Do List</title>
+
+<style>
+*{
+  box-sizing:border-box;
+  font-family:Arial, sans-serif;
+}
+body{
+  margin:0;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background:linear-gradient(to bottom,#ffd700 50%,#4a90e2 50%);
+}
+.container{
+  width:900px;
+  display:flex;
+  background:#fff;
+  border-radius:16px;
+  box-shadow:0 0 25px rgba(0,0,0,.15);
+  overflow:hidden;
+}
+.todo-section{
+  flex:2;
+  padding:30px;
+  background:#f8fafc;
+}
+.input-group{
+  display:flex;
+  margin-bottom:20px;
+}
+.input-group input{
+  width:70%;
+  padding:12px;
+  font-size:16px;
+  border:1px solid #ddd;
+  border-radius:8px 0 0 8px;
+  outline:none;
+}
+.add-btn{
+  padding:12px 20px;
+  background:#4a90e2;
+  color:#fff;
+  border:none;
+  border-radius:0 8px 8px 0;
+  font-size:16px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.add-btn:hover{
+  background:#3a7bd5;
+}
+.task-count{
+  margin-bottom:20px;
+  font-size:16px;
+  color:#555;
+}
+#taskNumber{
+  color:#4a90e2;
+  font-weight:bold;
+}
+ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+}
+li{
+  background:#fff;
+  padding:15px;
+  margin-bottom:10px;
+  border-radius:8px;
+  display:flex;
+  align-items:center;
+  box-shadow:0 2px 5px rgba(0,0,0,.05);
+}
+.checkbox{
+  width:20px;
+  height:20px;
+  margin-right:10px;
+}
+.task-text{
+  flex:1;
+  font-size:16px;
+}
+.completed .task-text{
+  text-decoration:line-through;
+  color:#888;
+  font-style:italic;
+}
+.task-buttons button{
+  margin-left:5px;
+  padding:8px 12px;
+  border:none;
+  border-radius:6px;
+  font-size:16px;
+  cursor:pointer;
+}
+.edit-btn{
+  background:#4a90e2;
+  color:#fff;
+}
+.delete-btn{
+  background:#ff6b6b;
+  color:#fff;
+}
+.promo-section{
+  flex:1;
+  background:linear-gradient(to bottom,#ffd700 50%,#4a90e2 50%);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  padding:40px 20px;
+}
+.promo-section h3{
+  margin:0;
+  font-size:22px;
+}
+.promo-section h2{
+  margin:10px 0;
+  font-size:48px;
+  font-weight:900;
+  letter-spacing:3px;
+  white-space:nowrap;
+}
+.promo-section p{
+  margin-top:15px;
+  font-size:24px;
+  color:#fff;
+  font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="todo-section">
+
+    <div class="input-group">
+      <input type="text" id="taskInput" placeholder="Review Presentation">
+      <button class="add-btn" onclick="addTask()">Add</button>
+    </div>
+
+    <div class="task-count">
+      You have <span id="taskNumber">3</span> task(s) to complete
+    </div>
+
+    <ul id="taskList">
+      <li>
+        <input type="checkbox" class="checkbox" onclick="toggleComplete(this)">
+        <span class="task-text">Edit Video</span>
+        <div class="task-buttons">
+          <button class="edit-btn" onclick="editTask(this)">✏️</button>
+          <button class="delete-btn" onclick="deleteTask(this)">🗑️</button>
+        </div>
+      </li>
+
+      <li class="completed">
+        <input type="checkbox" class="checkbox" checked onclick="toggleComplete(this)">
+        <span class="task-text">Buy Eggs & Milk</span>
+        <div class="task-buttons">
+          <button class="edit-btn" onclick="editTask(this)">✏️</button>
+          <button class="delete-btn" onclick="deleteTask(this)">🗑️</button>
+        </div>
+      </li>
+
+      <li>
+        <input type="checkbox" class="checkbox" onclick="toggleComplete(this)">
+        <span class="task-text">Organize Files</span>
+        <div class="task-buttons">
+          <button class="edit-btn" onclick="editTask(this)">✏️</button>
+          <button class="delete-btn" onclick="deleteTask(this)">🗑️</button>
+        </div>
+      </li>
+
+      <li>
+        <input type="checkbox" class="checkbox" onclick="toggleComplete(this)">
+        <span class="task-text">Write Blog Post</span>
+        <div class="task-buttons">
+          <button class="edit-btn" onclick="editTask(this)">✏️</button>
+          <button class="delete-btn" onclick="deleteTask(this)">🗑️</button>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+
+  <div class="promo-section">
+    <h3>With Free Source Code</h3>
+    <h2>TO DO LIST</h2>
+    <p>HTML, CSS, Javascript</p>
+  </div>
+
+</div>
+
+<script>
+function updateCount(){
+  const tasks=document.querySelectorAll("#taskList li");
+  const incomplete=[...tasks].filter(t=>!t.classList.contains("completed")).length;
+  document.getElementById("taskNumber").textContent=incomplete;
+}
+function toggleComplete(cb){
+  cb.parentElement.classList.toggle("completed");
+  updateCount();
+}
+function deleteTask(btn){
+  btn.closest("li").remove();
+  updateCount();
+}
+function editTask(btn){
+  const text=btn.parentElement.previousElementSibling;
+  const newText=prompt("",text.textContent);
+  if(newText&&newText.trim()!==""){
+    text.textContent=newText.trim();
+  }
+}
+function addTask(){
+  const input=document.getElementById("taskInput");
+  if(input.value.trim()==="")return;
+  const li=document.createElement("li");
+  li.innerHTML=`
+    <input type="checkbox" class="checkbox" onclick="toggleComplete(this)">
+    <span class="task-text">${input.value}</span>
+    <div class="task-buttons">
+      <button class="edit-btn" onclick="editTask(this)">✏️</button>
+      <button class="delete-btn" onclick="deleteTask(this)">🗑️</button>
+    </div>`;
+  document.getElementById("taskList").appendChild(li);
+  input.value="";
+  updateCount();
+}
+updateCount();
+</script>
+
+</body>
+</html>
