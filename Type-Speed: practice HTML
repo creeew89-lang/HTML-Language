@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Type-Speed</title>
+    <style>
+        :root {
+            --bg: #fff;
+            --text: #222;
+            --ok: #00ff08;
+            --bad: #f44336;
+        }
+
+        body.dark {
+            --bg: #121212;
+            --text: #eee;
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui;
+            background: var(--bg);
+            color: var(--text);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        #sentence {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        #sentence span.ok {
+            color: var(--ok);
+        }
+
+        #sentence span.bad {
+            color: var(--bad);
+            background: rgb(243, 1, 42);
+        }
+
+        #input {
+            font-size: 1.5rem;
+            width: 80%;
+            padding: .5rem;
+        }
+
+        #stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+            font-size: 1.2rem;
+        }
+
+        button {
+            padding: .6rem 1.2rem;
+            border: none;
+            border-radius: 4px;
+            background: #2196f3;
+            color: #fff;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <button onclick="document.body.classList.toggle('dark')">🌗</button>
+    <br>
+    <div id="sentence"></div>
+    <input id="input" placeholder="Start typin..." autocomplete="off">
+    <div id="stats">
+        <div>WPM: <span id="wpm">0</span></div>
+        <div>Accuracy: <span id="acc">100</span>%</div>
+    </div>
+    <button onclick="reset()">Try again<br></button>
+    <br>
+    <button onclick="copyRes()">Export<br></button>
+    <br>
+    <script>
+        const sentences = [
+            "The quick brown fox jumps over the lazy dog.",
+            "Grid layouts are powerful and fun to build.",
+            "Practice makes perfect when learning web development."
+        ];
+        let idx = 0, start, timer, correct = 0, total = 0;
+
+        function reset() {
+            idx = 0;
+            correct = total = 0;
+            document.getElementById('input').value = '';
+            document.getElementById('wpm').textContent = 0;
+            document.getElementById('acc').textContent = 100;
+            showSentence();
+        }
+        function showSentence() {
+            const s = sentences[Math.floor(Math.random() * sentences.length)];
+            document.getElementById('sentence').innerHTML = s.split('').map(ch => `<span>${ch}</span>`).join('');
+            idx = 0; correct = total = 0;
+        }
+        function update() {
+            const val = document.getElementById('input').value;
+            const spans = document.querySelectorAll('#sentence span');
+            correct = 0;
+            for (let i = 0; i < val.length; i++) {
+                const span = spans[i];
+                if (!span) break;
+                if (val[i] === span.textContent) {
+                    span.className = 'ok';
+                    correct++;
+                } else {
+                    span.className = 'bad';
+                }
+            }
+            spans.forEach((sp, i) => { if (i >= val.length) sp.className = ''; });
+            total = val.length;
+            const acc = total ? Math.round(correct / total * 100) : 100;
+            document.getElementById('acc').textContent = acc;
+
+            if (!start && val.length) { start = Date.now(); timer = setInterval(calcWpm, 500); }
+            if (val.length === spans.length && val === Array.from(spans).map(s => s.textContent).join('')) {
+                clearInterval(timer);
+            }
+        }
+        function calcWpm() {
+            const min = (Date.now() - start) / 60000;
+            const wpm = Math.round((correct / 5) / min);
+            document.getElementById('wpm').textContent = wpm || 0;
+        }
+        function copyRes() {
+            const wpm = document.getElementById('wpm').textContent;
+            const acc = document.getElementById('acc').textContent;
+            const text = `My typing speed is ${wpm} WPM with ${acc}% accuracy!`;
+            navigator.clipboard.writeText(text).then(() => {
+                alert('Results copied to clipboard!');
+            });
+        }
+        document.getElementById('input').addEventListener('input', update);
+        reset();
+    </script>
+</body>
+
+</html>
