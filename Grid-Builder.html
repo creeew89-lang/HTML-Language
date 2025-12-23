@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grid-Builder</title>
+  <style>
+    :root {
+      --cols: repeat(3, 1fr);
+      --rows: auto;
+      --gap: 1rem;
+      --bg: #ffffff;
+      --text: #222;
+      --accent: #2196F3;
+      --panel: #f5f5f5;
+    }
+    body.dark {
+      --bg: #121212;
+      --text: #eee;
+      --panel: #1e1e1e;
+      --accent: #42a5f5;
+    }
+    body {
+      margin: 0;
+      font-family: system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background .3s, color .3s;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      padding: 1rem;
+      background: var(--panel);
+      border-bottom: 1px solid #ccc;
+    }
+    .controls label {
+      display: flex;
+      flex-direction: column;
+      font-size: .9rem;
+      font-weight: 600;
+    }
+    .controls input[type="text"] {
+      width: 140px;
+      padding: .4rem .6rem;
+      border: 1px solid #999;
+      border-radius: 4px;
+      background: var(--bg);
+      color: var(--text);
+    }
+    .controls input[type="number"] {
+      width: 80px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: var(--cols);
+      grid-template-rows: var(--rows);
+      gap: var(--gap);
+      padding: 2rem;
+      min-height: 60vh;
+    }
+    .cell {
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: transform .2s;
+    }
+    .cell:hover {
+      transform: scale(1.05);
+    }
+    button {
+      margin: 1rem;
+      padding: .6rem 1.2rem;
+      border: none;
+      border-radius: 4px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover {
+      filter: brightness(1.15);
+    }
+    .theme-toggle {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <button class="theme-toggle" onclick="document.body.classList.toggle('dark')">🌗</button>
+
+  <div class="controls">
+    <label>columns
+      <input type="text" id="cols" value="repeat(3, 1fr)">
+    </label>
+    <label>rows
+      <input type="text" id="rows" value="auto">
+    </label>
+    <label>gap (rem)
+      <input type="number" id="gap" value="1" min="0" max="5" step="0.1">
+    </label>
+  </div>
+
+  <section class="grid" id="grid">
+    <div class="cell" onclick="spanCell(this)">1</div>
+    <div class="cell" onclick="spanCell(this)">2</div>
+    <div class="cell" onclick="spanCell(this)">3</div>
+  </section>
+
+  <button onclick="exportCss()">Export CSS</button>
+
+  <script>
+    const root = document.documentElement;
+    const cols = document.getElementById('cols');
+    const rows = document.getElementById('rows');
+    const gap = document.getElementById('gap');
+    const grid = document.getElementById('grid');
+
+    function build() {
+      root.style.setProperty('--cols', cols.value);
+      root.style.setProperty('--rows', rows.value);
+      root.style.setProperty('--gap', gap.value + 'rem');
+
+      const c = (cols.value.match(/repeat\((\d+)/) || [null, 3])[1];
+      const r = (rows.value.match(/repeat\((\d+)/) || [null, 3])[1];
+      grid.innerHTML = '';
+      for (let i = 1; i <= c * r; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        cell.textContent = i;
+        cell.onclick = () => spanCell(cell);
+        grid.appendChild(cell);
+      }
+    }
+
+    function spanCell(cell) {
+      const cs = prompt('grid-column-start (e.g., 2)', '1');
+      const ce = prompt('grid-column-end (e.g., 4)', 'span 2');
+      const rs = prompt('grid-row-start (e.g., 2)', '1');
+      const re = prompt('grid-row-end (e.g., 4)', 'span 2');
+      cell.style.gridColumnStart = cs;
+      cell.style.gridColumnEnd = ce;
+      cell.style.gridRowStart = rs;
+      cell.style.gridRowEnd = re;
+    }
+
+    function exportCss() {
+      const css = `display: grid;
+grid-template-columns: ${cols.value};
+grid-template-rows: ${rows.value};
+gap: ${gap.value}rem;`;
+      alert(css);
+    }
+
+    cols.oninput = rows.oninput = gap.oninput = build;
+    build();
+  </script>
+</body>
+</html>
