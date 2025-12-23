@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Buildflex Cheat Sheet</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    :root {
+      --j: 1;            
+      --a: 1;              
+      --g: 1rem;                       
+    }
+
+    .box {
+      --jmap: flex-start;   
+    }
+    :root[style*="--j:0"]  .box { --jmap: flex-start; }
+    :root[style*="--j:1"]  .box { --jmap: center; }
+    :root[style*="--j:2"]  .box { --jmap: flex-end; }
+    :root[style*="--j:3"]  .box { --jmap: space-between; }
+    :root[style*="--j:4"]  .box { --jmap: space-around; }
+
+    .box {
+      --amap: stretch;
+    }
+    :root[style*="--a:0"]  .box { --amap: flex-start; }
+    :root[style*="--a:1"]  .box { --amap: center; }
+    :root[style*="--a:2"]  .box { --amap: flex-end; }
+    :root[style*="--a:3"]  .box { --amap: stretch; }
+
+ .box {
+      display: flex;
+      justify-content: var(--jmap);
+      align-items: var(--amap);
+      gap: var(--g);
+      border: 2px solid #333;
+      padding: 1rem;
+      height: 200px;
+      margin-top: 1rem;
+    }
+    .item {
+      background: #4CAF50;
+      color: white;
+      padding: 1rem;
+      font-size: 1.5rem;
+      text-align: center;
+      flex: 0 0 auto;
+    }
+    label { margin-right: 1rem; font-weight: 600; }
+  </style>
+</head>
+
+<body>
+  <label>justify-content
+    <input type="range" min="0" max="4" value="1" class="form-range" id="j">
+  </label>
+  <label>align-items
+    <input type="range" min="0" max="3" value="1" class="form-range" id="a">
+  </label>
+  <label>gap (rem)
+    <input type="range" min="0" max="5" value="1" step="0.5" class="form-range" id="g">
+  </label>
+
+  <section class="box">
+    <div class="item">1</div>
+    <div class="item">2</div>
+    <div class="item">3</div>
+    <div class="item">4</div>
+  </section>
+<script>
+    const jInput = document.getElementById('j');
+    j.oninput = () => {
+root.style.setProperty('--j', jInput.value);
+root.style.setProperty('--a', aInput.value);
+root.style.setProperty('--g', gInput.value + 'rem');
+    };
+</script>
+</body>
+</html>
